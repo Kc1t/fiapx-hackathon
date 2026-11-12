@@ -22,7 +22,7 @@ jobs:
       run:
         working-directory: services/${{ matrix.service }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-go@v5
         with:
           go-version-file: services/${{ matrix.service }}/go.mod
@@ -40,12 +40,12 @@ jobs:
       matrix:
         service: [api, worker, notifier]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: build da imagem (sem push)
         run: docker build -t fiapx-${{ matrix.service }}:ci services/${{ matrix.service }}
 
   compose:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: docker compose config -q
