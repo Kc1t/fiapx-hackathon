@@ -1,7 +1,15 @@
 name: ci
 on:
   push:
+    branches: [main]
   pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   go:
@@ -18,6 +26,26 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version-file: services/${{ matrix.service }}/go.mod
+      - name: gofmt
+        run: test -z "$(gofmt -l .)" || { gofmt -l .; exit 1; }
       - run: go vet ./...
-      - run: go test -race -cover ./...
+      - run: go test -race -coverprofile=coverage.out ./...
+      - run: go tool cover -func=coverage.out | tail -1
       - run: go build ./...
+
+  docker:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        service: [api, worker, notifier]
+    steps:
+      - uses: actions/checkout@v4
+      - name: build da imagem (sem push)
+        run: docker build -t fiapx-${{ matrix.service }}:ci services/${{ matrix.service }}
+
+  compose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose config -q

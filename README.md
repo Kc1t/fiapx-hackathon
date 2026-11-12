@@ -1,5 +1,7 @@
 # fiapx-hackathon (nome temporário)
 
+![ci](https://github.com/Kc1t/fiapx-hackathon/actions/workflows/ci.yml/badge.svg)
+
 Hackathon Fase 5 da Pós Tech SOAT/FIAP — Sistema de Processamento de Vídeos (FIAP X). Grupo Reservoir Devs.
 
 O projeto base da FIAP é um monolito em Go que extrai frames de um vídeo com ffmpeg e devolve um zip. Aqui reescrevemos em serviços com fila, banco, autenticação e notificação.
@@ -43,3 +45,6 @@ docs/adr            # decisões de arquitetura
 | Notificação de erro | notifier |
 | Persistência / escala | Postgres, storage S3, réplicas do worker |
 | Testes e CI/CD | `.github/workflows/ci.yml` |
+
+## Contribuir
+Veja o [CONTRIBUTING.md](CONTRIBUTING.md): branches, commits, PR e checklist.

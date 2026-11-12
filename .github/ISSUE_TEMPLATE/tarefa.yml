@@ -1,0 +1,21 @@
+name: Tarefa
+description: Trabalho a fazer (feature, infra, docs)
+labels: []
+body:
+  - type: textarea
+    id: objetivo
+    attributes:
+      label: Objetivo
+      description: O que precisa existir quando isso estiver pronto?
+    validations: { required: true }
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Critérios de aceite
+      placeholder: "- [ ] ..."
+    validations: { required: true }
+  - type: input
+    id: requisito
+    attributes:
+      label: Requisito do enunciado relacionado
+      placeholder: "Ex.: não perder requisição em pico"
